@@ -42,7 +42,7 @@ ANSI 'dim text': it looks the same as 'normal text'.
 Dependencies
 ============
 
-None, other than Python. Tested on Python 2.5.5, 2.6.5 & 3.1.2.
+None, other than Python. Tested on Python 2.5.5, 2.6.5, 2.7 & 3.1.2.
 
 
 Usage
@@ -76,7 +76,7 @@ constant shorthand for ANSI escape sequences::
     print Fore.RED + 'some red text'
     print Back.GREEN + and with a green background'
     print Style.DIM + 'and in dim text'
-    print + Fore.DEFAULT + Back.DEFAULT + Style.DEFAULT
+    print + Fore.RESET + Back.RESET + Style.RESET_ALL
     print 'back to normal now'
 
 or simply by manually printing ANSI sequences from your own code::
@@ -98,8 +98,8 @@ such as Termcolor::
 
 Available formatting constants are::
 
-    Fore: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, DEFAULT.
-    Back: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, DEFAULT.
+    Fore: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
+    Back: BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE, RESET.
     Style: DIM, NORMAL, BRIGHT, RESET_ALL
 
 Style.RESET_ALL resets foreground, background and brightness. Colorama will
@@ -224,8 +224,13 @@ initial characters, are not recognised nor stripped.
 Development
 ===========
 
-Tests require Michael Foord's modules 'unittest2' and 'mock', and unittest2
-discovery doesn't work for colorama, so use 'nose'::
+Running tests requires:
+
+- Michael Foord's 'mock' module to be installed.
+- Either to be run under Python2.7 or 3.1 stdlib unittest, or to have Michael
+  Foord's 'unittest2' module to be installed.
+
+unittest2 test discovery doesn't work for colorama, so I use 'nose'::
 
     nosetests -s
 
@@ -242,12 +247,16 @@ Tim Golden for thought and much appreciated feedback on the initial idea.
 Changes
 =======
 
+0.1.18
+    Fix README (no such attr as Fore.DEFAULT, etc), kindly reported by nodakai.
+0.1.17
+    Prevent printing of garbage ANSI codes upon installing with pip
 0.1.16
     Re-upload to fix previous error. Make clean now removes old MANIFEST.
 0.1.15
     Completely broken. Distribution was empty due to leftover invalid MANIFEST
     file from building on a different platform.
-    Fix python3 incompatibility kindly reported by Günter Kolousek
+    Fix python3 incompatibility kindly reported by G |uumlaut| nter Kolousek
 0.1.14
     Fix hard-coded reset to white-on-black colors. Fore.RESET, Back.RESET
     and Style.RESET_ALL now revert to the colors as they were when init()
@@ -280,7 +289,7 @@ Changes
     Fix stacking of repeated atexit calls - now just called once.
     Fix ghastly import problems while running tests.
     'demo.py' (hg checkout only) now demonstrates autoreset and reset atexit.
-    Provide colorama.__version__, used by setup.py.
+    Provide colorama.VERSION, used by setup.py.
     Tests defanged so they no longer actually change terminal color when run.
 0.1.5
     Now works on Ubuntu.
@@ -294,4 +303,7 @@ Changes
     Minor tidy
 0.1
     Works on Windows for foreground color, background color, bright or dim
+
+.. |uumlaut| unicode:: U+00FC .. u with umlaut
+   :trim:
 
